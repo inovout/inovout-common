@@ -1,7 +1,5 @@
 package org.inovout.cache;
 
-import java.lang.reflect.InvocationTargetException;
-
 import org.inovout.cache.zookeeper.ZooKeeperRegionFactory;
 import org.inovout.config.Configuration;
 import org.inovout.util.ReflectionUtils;
@@ -44,10 +42,7 @@ public class CacheFactory {
 			configuration.addResource("cache.xml");
 		}
 
-		public PachCache build() throws InstantiationException,
-				IllegalAccessException, IllegalArgumentException,
-				InvocationTargetException, NoSuchMethodException,
-				SecurityException, ClassNotFoundException {
+		public PachCache build() {
 			
 			rootPath = configuration.get(PATH_CACHE_ROOT_PATH_KEY,
 					rootPath == null ? DEFAULT_PATH_CACHE_ROOT_PATH : rootPath);	

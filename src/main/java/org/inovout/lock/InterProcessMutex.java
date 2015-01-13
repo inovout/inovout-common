@@ -29,21 +29,22 @@ public class InterProcessMutex {
 
 	public InterProcessMutex(String lockName) {
 		this.lockName = lockName;
-
-		mutex = new InterProcessSemaphoreMutex(getZooKeeperClient(),
+		initZooKeeperClient();
+		mutex = new InterProcessSemaphoreMutex(zookeeperClient,
 				(LOCK_ROOT_PATH + lockName));
 
 	}
 
-	private CuratorFramework getZooKeeperClient() {
-		CuratorFramework zookeeperClient = ZooKeeperClientFactory
+	private CuratorFramework zookeeperClient;
+
+	private void initZooKeeperClient() {
+		zookeeperClient = ZooKeeperClientFactory
 				.getClient(InterProcessMutex.class);
 		synchronized (zookeeperClient) {
 			if (zookeeperClient.getState() != CuratorFrameworkState.STARTED) {
 				zookeeperClient.start();
 			}
 		}
-		return zookeeperClient;
 	}
 
 	public void acquire() throws Exception {
@@ -54,8 +55,12 @@ public class InterProcessMutex {
 		return mutex.acquire(time, unit);
 	}
 
-	public void release() throws Exception {
-		mutex.release();
+	public void release() {
+		try {
+			mutex.release();
+		} catch (Exception e) {
+			zookeeperClient.close();
+		}
 	}
 
 	public String getLockName() {

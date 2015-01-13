@@ -59,10 +59,12 @@ public class ZooKeeperClientFactory extends BaseFactory<CuratorFramework> {
 		}
 		return "127.0.0.1";
 	}
-
+	public static String getConnectionString(){
+		return configuration.get(CONNECTION_STRING_KEY,DEFAULT_CONNECTION_STRING_KEY);
+	}
 	@Override
 	public CuratorFramework newInstance(String name) {
-		String connectString = configuration.get(CONNECTION_STRING_KEY,DEFAULT_CONNECTION_STRING_KEY				);
+		String connectString = getConnectionString();
 		int sessionTimeoutMs = configuration.getInt(SESSION_TIMEOUT_MS_KEY,
 				DEFAULT_SESSION_TIMEOUT_MS);
 		int connectionTimeoutMs = configuration.getInt(

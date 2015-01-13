@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.logging.Log;
+import org.inovout.InovoutException;
 import org.inovout.config.Configuration;
 
 /**
@@ -205,7 +206,14 @@ public class ReflectionUtils {
 		return methods;
 	}
 
-	public static Object newInstance(String className) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException {
-		return Class.forName(className).getConstructor().newInstance();
+	public static Object newInstance(String className) {
+		try {
+			return Class.forName(className).getConstructor().newInstance();
+		} catch (InstantiationException | IllegalAccessException
+				| IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException
+				| ClassNotFoundException e) {
+			throw new InovoutException(e);
+		}
 	}
 }

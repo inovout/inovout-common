@@ -1,5 +1,7 @@
 package org.inovout.cache.zookeeper;
 
+import java.util.Hashtable;
+
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.imps.CuratorFrameworkState;
 import org.inovout.cache.PathRegion;
@@ -23,11 +25,23 @@ public class ZooKeeperRegionFactory implements RegionFactory {
 
 	@Override
 	public void stop() {
+		for(ZooKeeperPathRegion region : regions.values())
+		{
+			region.dispose();
+		}
 	}
+
+	private static final Hashtable<String, ZooKeeperPathRegion> regions = new Hashtable<String, ZooKeeperPathRegion>();
 
 	@Override
 	public PathRegion buildPathRegion(String regionName, String rootPath) {
-		return new ZooKeeperPathRegion(zookeeperClient, regionName, rootPath);
-	}
 
+		ZooKeeperPathRegion region = regions.get(regionName);
+		if (region == null) {
+			region = new ZooKeeperPathRegion(zookeeperClient, regionName,
+					rootPath);
+			regions.put(regionName, region);
+		}
+		return region;
+	}
 }

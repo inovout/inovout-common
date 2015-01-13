@@ -50,8 +50,6 @@ import javax.xml.transform.stream.StreamResult;
 import org.apache.commons.collections.map.UnmodifiableMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.JsonGenerator;
 import org.inovout.util.ReflectionUtils;
 import org.inovout.util.StringInterner;
 import org.inovout.util.StringUtils;
@@ -63,6 +61,8 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.google.common.base.Preconditions;
 
 /*
@@ -2449,7 +2449,7 @@ public class Configuration implements Iterable<Map.Entry<String, String>> {
 	public static void dumpConfiguration(Configuration config, Writer out)
 			throws IOException {
 		JsonFactory dumpFactory = new JsonFactory();
-		JsonGenerator dumpGenerator = dumpFactory.createJsonGenerator(out);
+		JsonGenerator dumpGenerator = dumpFactory.createGenerator(out);
 		dumpGenerator.writeStartObject();
 		dumpGenerator.writeFieldName("properties");
 		dumpGenerator.writeStartArray();

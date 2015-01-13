@@ -1,6 +1,6 @@
 package org.inovout.cache.zookeeper;
 
-import org.apache.curator.framework.CuratorFramework;
+import org.inovout.cache.Region;
 import org.inovout.cache.RegionAccessStrategy;
 
 public class AbstractZooKeeperAccessStrategy implements RegionAccessStrategy {
@@ -11,24 +11,16 @@ public class AbstractZooKeeperAccessStrategy implements RegionAccessStrategy {
 		this.region = region;
 	}
 
-	protected CuratorFramework getZooKeeperClient() {
-		return region.getZooKeeperClient();
-	}
-
-	protected String getRegionPath() {
-		return region.getRegionPath();
-	}
-
-	protected String getPath(String key) {
-		return region.getPath(key);
-	}
 
 	@Override
 	public boolean contains(Object key) throws Exception {
-	return contains((String)key);
+	return this.region.contains((String)key);
 	}
-	public boolean contains(String key) throws Exception {
-		return getZooKeeperClient().checkExists().forPath(getPath(key)) !=null;
 
+
+	@Override
+	public Region getRegion() {
+		return this.region;
 	}
+
 }
