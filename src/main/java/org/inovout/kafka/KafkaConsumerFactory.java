@@ -52,7 +52,7 @@ public class KafkaConsumerFactory extends BaseFactory<ConsumerConnector> {
 	}
 
 	@Override
-	public ConsumerConnector newInstance(String name) {
+	public ConsumerConnector newInstance() {
 		ConsumerConnector consumer = kafka.consumer.Consumer
 				.createJavaConsumerConnector(createConsumerConfig());
 		LOG.info("**********consumer created successfully**************");

@@ -38,7 +38,7 @@ public class TestBaseFactory {
 			
 		}
 		@Override
-		public  Object newInstance(String name){
+		public  Object newInstance(){
 			return new Object();
 		}
 	}

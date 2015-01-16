@@ -23,7 +23,7 @@ public class TestKafkaProducerFactory {
 	@Test
 	@SuppressWarnings("unchecked")
 	public void testNewInstance() throws Exception {
-		producer = (Producer<String,String>)KafkaProducerFactory.instance.newInstance("zkclient");
+		producer = (Producer<String,String>)KafkaProducerFactory.instance.newInstance();
 		KeyedMessage<String,String> data = new KeyedMessage<String,String>(
 				"monitoring-data-receiver","wei");
 		producer.send(data);

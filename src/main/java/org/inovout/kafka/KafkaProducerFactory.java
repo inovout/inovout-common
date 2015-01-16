@@ -45,7 +45,7 @@ public class KafkaProducerFactory extends BaseFactory<Producer<?,?>>{
 	
 	
 	@Override
-	public Producer<?,?>  newInstance(String name){
+	public Producer<?,?>  newInstance(){
 		Properties props = new Properties();
 		props.put(METADATA_BROKER_LIST_KEY, configuration.get(METADATA_BROKER_LIST_KEY));
 		props.put(SERIALIZER_CLASS_KEY, configuration.get(SERIALIZER_CLASS_KEY,DEFAULT_SERIALIZER_CLASS));

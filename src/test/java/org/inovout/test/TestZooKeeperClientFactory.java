@@ -17,7 +17,7 @@ public class TestZooKeeperClientFactory {
 	@Test
 	public void testNewInstance() throws Exception {
 	 client = ZooKeeperClientFactory.instance
-				.newInstance("zkclient");
+				.newInstance();
 	//System.out.println(this.getClass().getResource("/"));
 		assertNotNull("CuratorFramework对象不为空", client);
 	}

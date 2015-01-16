@@ -21,7 +21,7 @@ public class TestKafkaConsumerFactory {
 
 	@Test
 	public void testNewInstance() throws Exception {
-		consumer = KafkaConsumerFactory.instance.newInstance("consumer-client");
+		consumer = KafkaConsumerFactory.instance.newInstance();
 		assertNotNull("consumer对象为空", consumer);
 	}
 
