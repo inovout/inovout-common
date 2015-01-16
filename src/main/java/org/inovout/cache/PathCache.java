@@ -25,6 +25,7 @@ public class PathCache {
 	}
 
 	public String getRegionPath() {
-		return ((PathRegion)this.regionAccessStrategy.getRegion()).getRegionPath();
+		return ((PathRegion) this.regionAccessStrategy.getRegion())
+				.getRegionPath();
 	}
 }

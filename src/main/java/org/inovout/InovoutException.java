@@ -1,6 +1,10 @@
 package org.inovout;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 public class InovoutException extends RuntimeException {
+private static final Log LOG = LogFactory.getLog(InovoutException.class);
 	/**
 	 * 
 	 */
@@ -22,7 +26,8 @@ public class InovoutException extends RuntimeException {
 	 */
 	public InovoutException(Throwable cause) {
 		super( cause );
-	}
+		LOG.error(cause);
+		}
 
 	/**
 	 * Constructs a HibernateException using the given message and underlying cause.
@@ -32,5 +37,6 @@ public class InovoutException extends RuntimeException {
 	 */
 	public InovoutException(String message, Throwable cause) {
 		super( message, cause );
+		LOG.error(message,cause);
 	}
 }

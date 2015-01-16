@@ -12,12 +12,12 @@ public abstract class BaseFactory<T> {
 	public T getInstance(String name) {
 		T instance = (T) instances.get(name);
 		if (instance == null) {
-			instance = newInstance(name);
+			instance = newInstance();
 			instances.put(name, instance);
 		}
 		return (instance);
 	}
 
-	public abstract T newInstance(String name);
+	public abstract T newInstance();
 
 }

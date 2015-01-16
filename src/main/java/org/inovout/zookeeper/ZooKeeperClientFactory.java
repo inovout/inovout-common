@@ -87,7 +87,7 @@ public class ZooKeeperClientFactory extends BaseFactory<CuratorFramework> {
 				SYNC_TIME_MS_KEY, DEFAULT_SYNC_TIME_MS);
 	}
 	@Override
-	public CuratorFramework newInstance(String name) {
+	public CuratorFramework newInstance() {
 		String connectString = getConnectionString();
 		int sessionTimeoutMs = getSessionTimeOutMs();
 		int connectionTimeoutMs = getConnectionTimeoutMs();
