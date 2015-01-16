@@ -3,6 +3,10 @@ package org.inovout.zookeeper;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
@@ -12,6 +16,7 @@ import org.inovout.config.Configuration;
 
 public class ZooKeeperClientFactory extends BaseFactory<CuratorFramework> {
 
+	private static final Log LOG = LogFactory.getLog(ZooKeeperClientFactory.class);
 	private ZooKeeperClientFactory() {
 	}
 
@@ -44,11 +49,16 @@ public class ZooKeeperClientFactory extends BaseFactory<CuratorFramework> {
 	private static final String MAX_RETRY_SLEEP_TIME_MS_KEY = "zk.max.retry.sleep.time";
 	private static final int DEFAULT_MAX_RETRY_SLEEP_TIME_MS = Integer
 			.getInteger("zookeeper-retry-sleep-time", 5 * 60 * 1000);
+	
+	private static final String SYNC_TIME_MS_KEY = "zk.sync.time.ms";
+	private static final int DEFAULT_SYNC_TIME_MS = Integer
+			.getInteger("zookeeper-sync-time-ms", 5 * 60 * 1000);
 
+	
 	private static final Configuration configuration;
 	static {
 		configuration = new Configuration();
-		configuration.addResource("zookeeper.xml");
+		configuration.addResource("zookeeper-site.xml");
 	}
 
 	private static String getLocalAddress() {
@@ -62,22 +72,36 @@ public class ZooKeeperClientFactory extends BaseFactory<CuratorFramework> {
 	public static String getConnectionString(){
 		return configuration.get(CONNECTION_STRING_KEY,DEFAULT_CONNECTION_STRING_KEY);
 	}
+	
+	public static int getConnectionTimeoutMs(){	
+		return configuration.getInt(
+				CONNECTION_TIMEOUT_MS_KEY, DEFAULT_CONNECTION_TIMEOUT_MS);
+	}
+	public static int getSessionTimeOutMs(){	
+		return configuration.getInt(SESSION_TIMEOUT_MS_KEY,
+				DEFAULT_SESSION_TIMEOUT_MS);
+	}
+	
+	public static int getSyncTimeMs(){	
+		return configuration.getInt(
+				SYNC_TIME_MS_KEY, DEFAULT_SYNC_TIME_MS);
+	}
 	@Override
 	public CuratorFramework newInstance(String name) {
 		String connectString = getConnectionString();
-		int sessionTimeoutMs = configuration.getInt(SESSION_TIMEOUT_MS_KEY,
-				DEFAULT_SESSION_TIMEOUT_MS);
-		int connectionTimeoutMs = configuration.getInt(
-				CONNECTION_TIMEOUT_MS_KEY, DEFAULT_CONNECTION_TIMEOUT_MS);
+		int sessionTimeoutMs = getSessionTimeOutMs();
+		int connectionTimeoutMs = getConnectionTimeoutMs();
 
 		int retrySleepTimeMs=configuration.getInt(RETRY_SLEEP_TIME_MS_KEY,DEFAULT_RETRY_SLEEP_TIME_MS);
 		int maxRetries=configuration.getInt(MAX_RETRIES_KEY,DEFAULT_MAX_RETRIES);
 		int maxRetrySleepMs=configuration.getInt(MAX_RETRY_SLEEP_TIME_MS_KEY,DEFAULT_MAX_RETRY_SLEEP_TIME_MS);
 		RetryPolicy retryPolicy = new ExponentialBackoffRetry(retrySleepTimeMs, maxRetries,maxRetrySleepMs);
-		return CuratorFrameworkFactory.builder().connectString(connectString)
+		
+		CuratorFramework curatorFramework= CuratorFrameworkFactory.builder().connectString(connectString)
 				.sessionTimeoutMs(sessionTimeoutMs)
 				.connectionTimeoutMs(connectionTimeoutMs)
 				.retryPolicy(retryPolicy).build();
-
+		
+		return curatorFramework;
 	}
 }

@@ -75,7 +75,7 @@ public class ZooKeeperPathRegion implements PathRegion {
 	}
 
 	private void initZooKeeperCache() {
-		synchronized (zookeeperCache) {
+		synchronized (zookeeperClient) {
 			if (zookeeperCache != null) {
 				return;
 			}

@@ -1,10 +1,10 @@
 package org.inovout.cache;
 
-public class PachCache {
+public class PathCache {
 
 	private final RegionAccessStrategy regionAccessStrategy;
 
-	public PachCache(RegionAccessStrategy regionAccessStrategy) {
+	public PathCache(RegionAccessStrategy regionAccessStrategy) {
 		this.regionAccessStrategy = regionAccessStrategy;
 	}
 

@@ -1,11 +1,13 @@
 package org.inovout.cache;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.inovout.cache.zookeeper.ZooKeeperRegionFactory;
 import org.inovout.config.Configuration;
 import org.inovout.util.ReflectionUtils;
 
 public class CacheFactory {
-
+	private static final Log LOG = LogFactory.getLog(CacheFactory.class);
 	public static PathBuilder builderPathCache() {
 		return new PathBuilder();
 	}
@@ -39,18 +41,19 @@ public class CacheFactory {
 		private static final Configuration configuration;
 		static {
 			configuration = new Configuration();
-			configuration.addResource("cache.xml");
+			configuration.addResource("cache-site.xml");
 		}
 
-		public PachCache build() {
+		public PathCache build() {
 			
 			rootPath = configuration.get(PATH_CACHE_ROOT_PATH_KEY,
 					rootPath == null ? DEFAULT_PATH_CACHE_ROOT_PATH : rootPath);	
 			
 			RegionFactory regionFactory = (RegionFactory) ReflectionUtils.newInstance(PATH_REGION_FACTORY_CLASS);
 			regionFactory.start();
-			return new PachCache(regionFactory.buildPathRegion(regionName,
+			PathCache pathCache =new PathCache(regionFactory.buildPathRegion(regionName,
 					rootPath).buildAccessStrategy(accessType));
+			return pathCache;
 		}
 	}
 }

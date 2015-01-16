@@ -2,6 +2,8 @@ package org.inovout.cache.zookeeper;
 
 import java.util.Hashtable;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.imps.CuratorFrameworkState;
 import org.inovout.cache.PathRegion;
@@ -9,6 +11,8 @@ import org.inovout.cache.RegionFactory;
 import org.inovout.zookeeper.ZooKeeperClientFactory;
 
 public class ZooKeeperRegionFactory implements RegionFactory {
+	
+	private static final Log LOG = LogFactory.getLog(ZooKeeperRegionFactory.class);
 	private CuratorFramework zookeeperClient;
 
 	@Override
@@ -42,6 +46,8 @@ public class ZooKeeperRegionFactory implements RegionFactory {
 					rootPath);
 			regions.put(regionName, region);
 		}
+		
+		LOG.info("**********region created successfully**************");
 		return region;
 	}
 }
