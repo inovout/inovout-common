@@ -55,7 +55,7 @@ public class KafkaConsumerFactory extends BaseFactory<ConsumerConnector> {
 	public ConsumerConnector newInstance() {
 		ConsumerConnector consumer = kafka.consumer.Consumer
 				.createJavaConsumerConnector(createConsumerConfig());
-		LOG.info("**********consumer created successfully**************");
+		LOG.info("KafkaConsumerFactoryBuildInfo: "+GROUP_ID_KEY+":"+configuration.get(GROUP_ID_KEY,DEFAULT_GROUP_ID));
 		return consumer;
 	}
 

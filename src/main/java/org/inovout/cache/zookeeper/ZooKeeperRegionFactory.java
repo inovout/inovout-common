@@ -46,8 +46,7 @@ public class ZooKeeperRegionFactory implements RegionFactory {
 					rootPath);
 			regions.put(regionName, region);
 		}
-		
-		LOG.info("**********region created successfully**************");
+		LOG.info("ZooKeeperRegionFactoryBuildInfo: regionName:"+regionName+";rootPath:"+rootPath);
 		return region;
 	}
 }

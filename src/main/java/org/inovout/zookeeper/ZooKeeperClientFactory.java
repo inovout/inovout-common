@@ -101,7 +101,7 @@ public class ZooKeeperClientFactory extends BaseFactory<CuratorFramework> {
 				.sessionTimeoutMs(sessionTimeoutMs)
 				.connectionTimeoutMs(connectionTimeoutMs)
 				.retryPolicy(retryPolicy).build();
-		
+		LOG.info("ZooKeeperClientFactoryBuildInfo: connectString:"+getConnectionString());
 		return curatorFramework;
 	}
 }

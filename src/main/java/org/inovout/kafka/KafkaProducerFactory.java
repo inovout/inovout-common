@@ -51,6 +51,7 @@ public class KafkaProducerFactory extends BaseFactory<Producer<?,?>>{
 		props.put(SERIALIZER_CLASS_KEY, configuration.get(SERIALIZER_CLASS_KEY,DEFAULT_SERIALIZER_CLASS));
 		ProducerConfig config = new ProducerConfig(props);
 		Producer<?,?> producer = new Producer<String,String>(config);
+		LOG.info("KafkaProducerFactoryBuildInfo: "+METADATA_BROKER_LIST_KEY+" :"+configuration.get(METADATA_BROKER_LIST_KEY));
 		return producer;
 	    
 	}

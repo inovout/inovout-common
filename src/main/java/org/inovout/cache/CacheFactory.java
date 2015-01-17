@@ -53,6 +53,8 @@ public class CacheFactory {
 			regionFactory.start();
 			PathCache pathCache =new PathCache(regionFactory.buildPathRegion(regionName,
 					rootPath).buildAccessStrategy(accessType));
+			
+			LOG.info("CacheFactoryBuildInfo: regionName:"+regionName+";rootPath:"+rootPath+";accessType:"+accessType);
 			return pathCache;
 		}
 	}

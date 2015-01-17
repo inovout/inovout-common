@@ -142,8 +142,14 @@ public class ZooKeeperPathRegion implements PathRegion {
 	}
 
 	void put(String key, Object value) throws Exception {
-		getZooKeeperClient().setData().forPath(getPath(key),
-				JsonUtils.getBytes(value));
+		if(contains(key)){
+			getZooKeeperClient().setData().forPath(getPath(key),
+					JsonUtils.getBytes(value));
+		}else{
+			getZooKeeperClient().create().forPath(getPath(key),
+					JsonUtils.getBytes(value));
+		}
+		
 	}
 
 	Object get(String path) {
