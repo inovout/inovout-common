@@ -2,12 +2,15 @@ package org.inovout.elasticsearch;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.inovout.BaseFactory;
 import org.inovout.config.Configuration;
 
 public class ElasticsearchClientFactory extends
 		BaseFactory<ElasticsearchClient> {
-
+	private static final Log LOG = LogFactory.getLog(ElasticsearchClientFactory.class);
 	private ElasticsearchClientFactory() {
 	}
 
@@ -30,7 +33,7 @@ public class ElasticsearchClientFactory extends
 	private static final Configuration configuration;
 	static {
 		configuration = new Configuration();
-		configuration.addResource("elasticsearch.xml");
+		configuration.addResource("elasticsearch-site.xml");
 	}
 
 	private static String getLocalAddress() {
@@ -48,7 +51,7 @@ public class ElasticsearchClientFactory extends
 				DEFAULT_SERVER_ADDRESS_STRING);
 		String clusterName = configuration.get(CLUSTER_NAME_KEY,
 				DEFAULT_CLUSTER_NAME);
-
+		LOG.info("ElasticsearchClientFactoryBuildInfo: servers:"+servers+";clusterName:"+clusterName);
 		return new ElasticsearchClient(servers, clusterName);
 	}
 

@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+ <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+	<property>
+		<name>es.cluster.name</name>
+		<value>elasticsearch_3cloud</value>
+	</property>
+	<property>
+		<name>es.server.address</name>
+		<value>172.10.1.120:9300,172.10.1.123:9300,172.10.1.126:9300</value>
+	</property>
+</configuration> 

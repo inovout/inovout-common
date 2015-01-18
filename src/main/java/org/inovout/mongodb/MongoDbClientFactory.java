@@ -5,14 +5,17 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.inovout.BaseFactory;
 import org.inovout.InovoutException;
 import org.inovout.config.Configuration;
 
+
 import com.mongodb.ServerAddress;
 
 public class MongoDbClientFactory extends BaseFactory<MongoDbClient> {
-
+	private static final Log LOG = LogFactory.getLog(MongoDbClientFactory.class);
 	private MongoDbClientFactory() {
 	}
 
@@ -28,12 +31,12 @@ public class MongoDbClientFactory extends BaseFactory<MongoDbClient> {
 
 	private static final String SERVER_ADDRESS_STRING_KEY = "mongodb.server.address";
 	private static final String DEFAULT_SERVER_ADDRESS_STRING = getLocalAddress()
-			+ ":21017";
+			+ ":27017";
 
 	private static final Configuration configuration;
 	static {
 		configuration = new Configuration();
-		configuration.addResource("mongodb.xml");
+		configuration.addResource("mongodb-site.xml");
 	}
 
 	private static String getLocalAddress() {
@@ -65,6 +68,7 @@ public class MongoDbClientFactory extends BaseFactory<MongoDbClient> {
 
 	@Override
 	public MongoDbClient newInstance() {
+		LOG.info("MongoDbClientFactoryBuildInfo: serverAddress:"+getServerAddresses());
 		return new MongoDbClient(getServerAddresses());
 	}
 
