@@ -1,6 +1,5 @@
 package org.inovout.kafka;
 
-
 import java.util.Properties;
 
 import kafka.javaapi.producer.Producer;
@@ -12,7 +11,7 @@ import org.inovout.BaseFactory;
 import org.inovout.config.Configuration;
 
 
-public class KafkaProducerFactory extends BaseFactory<Producer<?,?>>{
+public class KafkaProducerFactory extends BaseFactory<Producer<Long,byte[]>>{
 	private static final Log LOG = LogFactory.getLog(KafkaProducerFactory.class);
 	private KafkaProducerFactory() {
 		
@@ -20,11 +19,11 @@ public class KafkaProducerFactory extends BaseFactory<Producer<?,?>>{
 
 	public static final KafkaProducerFactory instance = new KafkaProducerFactory();
 
-	public static Producer<?,?> getProducer(Class<?> clazz) {
+	public static Producer<Long,byte[]> getProducer(Class<?> clazz) {
 		return instance.getInstance(clazz);
 	}
 
-	public static Producer<?,?> getProducer(String name) {
+	public static Producer<Long,byte[]> getProducer(String name) {
 		return instance.getInstance(name);
 	}
 	
@@ -45,12 +44,12 @@ public class KafkaProducerFactory extends BaseFactory<Producer<?,?>>{
 	
 	
 	@Override
-	public Producer<?,?>  newInstance(){
+	public Producer<Long,byte[]>  newInstance(){
 		Properties props = new Properties();
 		props.put(METADATA_BROKER_LIST_KEY, configuration.get(METADATA_BROKER_LIST_KEY));
 		props.put(SERIALIZER_CLASS_KEY, configuration.get(SERIALIZER_CLASS_KEY,DEFAULT_SERIALIZER_CLASS));
 		ProducerConfig config = new ProducerConfig(props);
-		Producer<?,?> producer = new Producer<String,String>(config);
+		Producer<Long,byte[]> producer = new Producer<Long,byte[]>(config);
 		LOG.info("KafkaProducerFactoryBuildInfo: "+METADATA_BROKER_LIST_KEY+" :"+configuration.get(METADATA_BROKER_LIST_KEY));
 		return producer;
 	    

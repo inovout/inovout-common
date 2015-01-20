@@ -11,7 +11,7 @@ public final class Time {
    * monotonicNow.
    * @return current time in msec.
    */
-  public static long now() {
+  public static Long now() {
     return System.currentTimeMillis();
   }
   

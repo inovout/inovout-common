@@ -1,6 +1,7 @@
 package org.inovout.elasticsearch;
 
-import org.elasticsearch.action.index.IndexRequestBuilder;
+import org.elasticsearch.client.Client;
+import org.elasticsearch.client.IndicesAdminClient;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.ImmutableSettings;
 import org.elasticsearch.common.settings.Settings;
@@ -29,8 +30,12 @@ public class ElasticsearchClient {
 		return transportAddrs;
 	}
 
-	public IndexRequestBuilder getIndexRequestBuilder(String index,String type) {
-		return client.prepareIndex(index, type);
+	public Client getClient() {
+		return client;
+	}
+
+	public IndicesAdminClient getIndicesAdminClient() {
+		return client.admin().indices();
 	}
 
 	void dispose() throws Exception {

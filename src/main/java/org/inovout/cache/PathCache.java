@@ -20,12 +20,16 @@ public class PathCache {
 		getWriteOnlyRegionAccessStrategy().put(key, value);
 	}
 
+	public String getRegionPath() {
+		return ((PathRegion) this.regionAccessStrategy.getRegion())
+				.getRegionPath();
+	}
+
 	public Object get(String key) {
 		return getReaderOnlyRegionAccessStrategy().get(key);
 	}
 
-	public String getRegionPath() {
-		return ((PathRegion) this.regionAccessStrategy.getRegion())
-				.getRegionPath();
+	public String getString(String key) {
+		return (String) get(key);
 	}
 }
