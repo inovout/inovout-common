@@ -22,8 +22,8 @@ public class WriteOnlyZooKeeperRegionAccessStrategy extends
 	}
 
 	@Override
-	public void remvoe(Object key) {
-		region.remvoe((String) key);
+	public void remove(Object key) {
+		region.remove((String) key);
 	}
 
 	@Override

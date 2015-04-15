@@ -3,6 +3,7 @@ package org.inovout.cache.zookeeper;
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.curator.framework.CuratorFramework;
@@ -117,7 +118,7 @@ public class ZooKeeperPathRegion implements PathRegion {
 	}
 
 	private void put(ChildData data) {
-		memoryCache.put(data.getPath(), data.getData());
+		memoryCache.put(data.getPath(), JsonUtils.getString(data.getData()));
 	}
 
 	private void initMemoryCache(PathChildrenCache cache) {
@@ -142,18 +143,28 @@ public class ZooKeeperPathRegion implements PathRegion {
 	}
 
 	void put(String key, Object value) throws Exception {
-		if(contains(key)){
+		if (contains(key)) {
 			getZooKeeperClient().setData().forPath(getPath(key),
 					JsonUtils.getBytes(value));
-		}else{
+		} else {
 			getZooKeeperClient().create().forPath(getPath(key),
 					JsonUtils.getBytes(value));
 		}
-		
+
 	}
 
 	Object get(String path) {
-		return memoryCache.get(getPath(path));
+		Object value = memoryCache.get(getPath(path));
+		if (value == null) {
+			try {
+				value = JsonUtils.getString(
+						getZooKeeperClient().getData().forPath(getPath(path)));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				throw new InovoutException("从zookeeper中获取值失败！");
+			}
+		}
+		return value;
 
 	}
 
@@ -165,7 +176,7 @@ public class ZooKeeperPathRegion implements PathRegion {
 		}
 	}
 
-	void remvoe(String path) {
+	void remove(String path) {
 		try {
 			getZooKeeperClient().delete().forPath(getPath(path));
 		} catch (Exception e) {

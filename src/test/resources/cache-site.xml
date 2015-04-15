@@ -1,8 +1,12 @@
 <?xml version="1.0"?>
  <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
  <configuration>
-  <property>
+<!--   <property>
    <name>path_cache.root.path</name>
    <value>/3cloud/cache/</value>
+ </property> -->
+   <property>
+   <name>test_path_cache.root.path</name>
+   <value>/test/pathdata/</value>
  </property>
 </configuration> 

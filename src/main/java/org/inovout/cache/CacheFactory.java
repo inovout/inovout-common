@@ -47,7 +47,7 @@ public class CacheFactory {
 		public PathCache build() {
 			
 			rootPath = configuration.get(PATH_CACHE_ROOT_PATH_KEY,
-					rootPath == null ? DEFAULT_PATH_CACHE_ROOT_PATH : rootPath);	
+					rootPath == null ? DEFAULT_PATH_CACHE_ROOT_PATH : rootPath);
 			
 			RegionFactory regionFactory = (RegionFactory) ReflectionUtils.newInstance(PATH_REGION_FACTORY_CLASS);
 			regionFactory.start();

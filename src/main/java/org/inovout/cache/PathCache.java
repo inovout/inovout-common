@@ -30,6 +30,6 @@ public class PathCache {
 	}
 
 	public String getString(String key) {
-		return (String) get(key);
+		return (String)get(key);
 	}
 }

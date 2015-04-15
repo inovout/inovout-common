@@ -12,6 +12,7 @@ public class ReadOnlyZooKeeperRegionAccessStrategy extends
 
 	@Override
 	public Object get(Object key) {
+		
 		return region.get((String)key);
 	}
 }

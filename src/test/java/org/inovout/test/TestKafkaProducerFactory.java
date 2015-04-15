@@ -2,7 +2,6 @@ package org.inovout.test;
 
 import static org.junit.Assert.assertNotNull;
 import kafka.javaapi.producer.Producer;
-import kafka.producer.KeyedMessage;
 
 import org.inovout.kafka.KafkaProducerFactory;
 import org.junit.Before;
@@ -24,9 +23,6 @@ public class TestKafkaProducerFactory {
 	public void testNewInstance() throws Exception {
 		producer =  KafkaProducerFactory.instance
 				.newInstance();
-		KeyedMessage<String, String> data = new KeyedMessage<String, String>(
-				"monitoring-data-receiver", "wei");
-		//producer.send(data);
 		assertNotNull("Producer对象不为空", producer);
 	}
 

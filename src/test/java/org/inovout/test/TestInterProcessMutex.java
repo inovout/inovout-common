@@ -73,7 +73,6 @@ public class TestInterProcessMutex {
 				Thread.sleep(15000);
 				lock.release();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				
 			}
